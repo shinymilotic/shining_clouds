@@ -11,13 +11,10 @@ use crate::domain::comment_service::CommentService;
 use crate::domain::profile_service::ProfileService;
 use crate::domain::tag_service::TagService;
 use crate::domain::user_service::UserService;
-use crate::openapi::ApiDoc;
 use crate::utils::jwt::JwtHandler;
 use axum::Router;
 use tower_http::trace::{DefaultMakeSpan, DefaultOnResponse, MakeSpan, TraceLayer};
 use tracing::Span;
-use utoipa::OpenApi;
-use utoipa_swagger_ui::SwaggerUi;
 
 #[derive(Clone)]
 struct FilteringMakeSpan<'a> {
@@ -50,6 +47,7 @@ pub fn router(state: AppState) -> Router {
         .merge(users::user_routes())
         .merge(profiles::profile_routes())
         .merge(articles::article_routes())
+        .merge(create_articles::create_article_routes())
         .merge(comments::comment_routes())
         .merge(tags::tag_routes())
         .layer(
@@ -61,7 +59,6 @@ pub fn router(state: AppState) -> Router {
 
     Router::new()
         .nest("/api", api_routes)
-        .merge(SwaggerUi::new("/api/docs").url("/api/docs/openapi.json", ApiDoc::openapi()))
         .with_state(state)
 }
 

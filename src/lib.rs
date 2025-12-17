@@ -5,7 +5,6 @@ pub mod database;
 mod domain;
 pub mod http;
 mod model;
-pub mod openapi;
 mod persistence;
 mod server;
 pub mod tracing;

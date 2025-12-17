@@ -20,21 +20,6 @@ pub(crate) fn comment_routes() -> Router<AppState> {
         .route("/articles/{slug}/comments/{id}", delete(delete_comment))
 }
 
-#[utoipa::path(
-    post,
-    path = "/api/articles/{slug}/comments",
-    tag = "Comments",
-    params(
-        ("slug" = Slug, Path, description = "Slug of the article to comment on")
-    ),
-    request_body = CreateCommentRequest,
-    responses(
-        (status = 201, description = "Comment created successfully", body = CommentResponse),
-        (status = 401, description = "Unauthorized - token missing or invalid", body = crate::http::dto::error::ErrorResponse),
-        (status = 404, description = "Article not found", body = crate::http::dto::error::ErrorResponse),
-        (status = 422, description = "Validation error", body = crate::http::dto::error::ErrorResponse)
-    )
-)]
 pub(crate) async fn create_comment(
     State(state): State<AppState>,
     auth: AuthToken,
@@ -61,18 +46,6 @@ pub(crate) async fn create_comment(
     Ok((StatusCode::CREATED, Json(CommentResponse { comment })))
 }
 
-#[utoipa::path(
-    get,
-    path = "/api/articles/{slug}/comments",
-    tag = "Comments",
-    params(
-        ("slug" = Slug, Path, description = "Slug of the article to get comments for")
-    ),
-    responses(
-        (status = 200, description = "Comments retrieved successfully", body = CommentsResponse),
-        (status = 404, description = "Article not found", body = crate::http::dto::error::ErrorResponse)
-    )
-)]
 pub(crate) async fn get_comments(
     State(state): State<AppState>,
     auth: Option<AuthToken>,
@@ -100,21 +73,6 @@ pub(crate) async fn get_comments(
     Ok(Json(CommentsResponse { comments }))
 }
 
-#[utoipa::path(
-    delete,
-    path = "/api/articles/{slug}/comments/{id}",
-    tag = "Comments",
-    params(
-        ("slug" = Slug, Path, description = "Slug of the article"),
-        ("id" = CommentId, Path, description = "ID of the comment to delete")
-    ),
-    responses(
-        (status = 204, description = "Comment deleted successfully"),
-        (status = 401, description = "Unauthorized - token missing or invalid", body = crate::http::dto::error::ErrorResponse),
-        (status = 403, description = "Forbidden - not the comment author", body = crate::http::dto::error::ErrorResponse),
-        (status = 404, description = "Comment not found", body = crate::http::dto::error::ErrorResponse)
-    )
-)]
 pub(crate) async fn delete_comment(
     State(state): State<AppState>,
     auth: AuthToken,

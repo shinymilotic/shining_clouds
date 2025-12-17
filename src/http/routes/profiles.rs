@@ -15,18 +15,6 @@ pub(crate) fn profile_routes() -> Router<AppState> {
         .route("/profiles/{username}/follow", delete(unfollow_user))
 }
 
-#[utoipa::path(
-    get,
-    path = "/api/profiles/{username}",
-    tag = "Profiles",
-    params(
-        ("username" = Username, Path, description = "Username of the profile to retrieve")
-    ),
-    responses(
-        (status = 200, description = "Profile retrieved successfully", body = ProfileResponse),
-        (status = 404, description = "Profile not found", body = crate::http::dto::error::ErrorResponse)
-    )
-)]
 pub(crate) async fn get_profile(
     State(state): State<AppState>,
     auth: Option<AuthToken>,
@@ -53,19 +41,6 @@ pub(crate) async fn get_profile(
     Ok(Json(ProfileResponse { profile }))
 }
 
-#[utoipa::path(
-    post,
-    path = "/api/profiles/{username}/follow",
-    tag = "Profiles",
-    params(
-        ("username" = Username, Path, description = "Username of the profile to follow")
-    ),
-    responses(
-        (status = 200, description = "User followed successfully", body = ProfileResponse),
-        (status = 401, description = "Unauthorized - token missing or invalid", body = crate::http::dto::error::ErrorResponse),
-        (status = 404, description = "Profile not found", body = crate::http::dto::error::ErrorResponse)
-    )
-)]
 pub(crate) async fn follow_user(
     State(state): State<AppState>,
     auth: AuthToken,
@@ -89,19 +64,6 @@ pub(crate) async fn follow_user(
     Ok(Json(ProfileResponse { profile }))
 }
 
-#[utoipa::path(
-    delete,
-    path = "/api/profiles/{username}/follow",
-    tag = "Profiles",
-    params(
-        ("username" = Username, Path, description = "Username of the profile to unfollow")
-    ),
-    responses(
-        (status = 200, description = "User unfollowed successfully", body = ProfileResponse),
-        (status = 401, description = "Unauthorized - token missing or invalid", body = crate::http::dto::error::ErrorResponse),
-        (status = 404, description = "Profile not found", body = crate::http::dto::error::ErrorResponse)
-    )
-)]
 pub(crate) async fn unfollow_user(
     State(state): State<AppState>,
     auth: AuthToken,

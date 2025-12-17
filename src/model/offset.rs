@@ -1,7 +1,6 @@
 use serde::{Deserialize, Serialize};
-use utoipa::ToSchema;
 
-#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default, ToSchema)]
+#[derive(Debug, Clone, Copy, Deserialize, Serialize, Default)]
 pub struct Offset(u64);
 
 impl Offset {

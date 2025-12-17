@@ -3,14 +3,13 @@ use crate::model::values::bio::Bio;
 use crate::model::values::image::Image;
 use crate::model::values::username::Username;
 use serde::{Deserialize, Serialize};
-use utoipa::ToSchema;
 
-#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct ProfileResponse {
     pub profile: Profile,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, ToSchema)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Profile {
     pub username: Username,
     pub bio: Option<Bio>,

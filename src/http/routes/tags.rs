@@ -10,14 +10,6 @@ pub(crate) fn tag_routes() -> Router<AppState> {
     Router::new().route("/tags", get(get_tags))
 }
 
-#[utoipa::path(
-    get,
-    path = "/api/tags",
-    tag = "Tags",
-    responses(
-        (status = 200, description = "Tags retrieved successfully", body = TagsResponse)
-    )
-)]
 pub(crate) async fn get_tags(
     State(state): State<AppState>,
 ) -> Result<Json<TagsResponse>, AppError> {

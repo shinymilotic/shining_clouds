@@ -4,19 +4,18 @@ use crate::model::values::comment_body::CommentBody;
 use crate::model::values::comment_id::CommentId;
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
-use utoipa::ToSchema;
 
-#[derive(Debug, Serialize, Deserialize, ToSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct CommentResponse {
     pub comment: CommentItem,
 }
 
-#[derive(Debug, Serialize, Deserialize, ToSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct CommentsResponse {
     pub comments: Vec<CommentItem>,
 }
 
-#[derive(Debug, Serialize, Deserialize, ToSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct CommentItem {
     pub id: CommentId,
     #[serde(rename = "createdAt")]
@@ -44,12 +43,12 @@ impl CommentItem {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, ToSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct CreateCommentRequest {
     pub comment: CreateComment,
 }
 
-#[derive(Debug, Serialize, Deserialize, ToSchema)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct CreateComment {
     pub body: CommentBody,
 }

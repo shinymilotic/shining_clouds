@@ -3,12 +3,10 @@ use serde::{Deserialize, Serialize};
 use sqlx::Type;
 use std::fmt::{Display, Formatter};
 use std::ops::Deref;
-use utoipa::ToSchema;
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Type, ToSchema)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize, Type)]
 #[sqlx(transparent)]
 #[serde(try_from = "String", into = "String")]
-#[schema(value_type = String, example = "In this article, we will explore how to build robust web applications...")]
 pub struct ArticleBody(String);
 
 impl ArticleBody {

@@ -7,7 +7,6 @@ mod database;
 mod domain;
 mod http;
 mod model;
-mod openapi;
 mod persistence;
 mod server;
 mod tracing;

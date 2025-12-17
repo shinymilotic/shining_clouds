@@ -5,3 +5,4 @@ pub(crate) mod health;
 pub(crate) mod profiles;
 pub(crate) mod tags;
 pub(crate) mod users;
+pub(crate) mod create_articles;
