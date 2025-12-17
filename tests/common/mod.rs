@@ -61,13 +61,6 @@ impl TestDatabase {
 
         info!("Created test database: {}", name);
 
-        // Run migrations on the new database
-        let test_db = PgPoolOptions::new()
-            .max_connections(1)
-            .connect(format!("postgresql://{}:{}@localhost:5432/{}", user, password, name).as_str())
-            .await?;
-
-
         Ok(TestDatabase { name })
     }
 }
