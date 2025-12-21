@@ -6,15 +6,9 @@ use crate::http::dto::article::{
 use crate::http::extractors::auth_token::AuthToken;
 use axum::extract::{State};
 use axum::http::StatusCode;
-use axum::routing::post;
-use axum::{Json, Router};
+use axum::{Json};
 use tracing::info;
 use crate::app_error::AppError;
-
-pub(crate) fn create_article_routes() -> Router<AppState> {
-    Router::new()
-        .route("/articles", post(create_article))
-}
 
 pub(crate) async fn create_article(
     State(state): State<AppState>,

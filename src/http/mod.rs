@@ -5,7 +5,7 @@ pub(crate) mod routes;
 use axum::extract::Request;
 use routes::*;
 
-use crate::app_config::AppConfig;
+use crate::{app_config::AppConfig};
 use crate::domain::article_service::ArticleService;
 use crate::domain::comment_service::CommentService;
 use crate::domain::profile_service::ProfileService;
@@ -15,7 +15,6 @@ use crate::utils::jwt::JwtHandler;
 use axum::Router;
 use tower_http::trace::{DefaultMakeSpan, DefaultOnResponse, MakeSpan, TraceLayer};
 use tracing::Span;
-
 #[derive(Clone)]
 struct FilteringMakeSpan<'a> {
     inner: DefaultMakeSpan,
@@ -46,8 +45,7 @@ pub fn router(state: AppState) -> Router {
         .merge(auth::auth_routes())
         .merge(users::user_routes())
         .merge(profiles::profile_routes())
-        .merge(articles::article_routes())
-        .merge(create_articles::create_article_routes())
+        .merge(articles::article_routes::article_routes())
         .merge(comments::comment_routes())
         .merge(tags::tag_routes())
         .layer(

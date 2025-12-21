@@ -1,0 +1,9 @@
+pub(crate) mod articles_feed;
+pub(crate) mod create_article;
+pub(crate) mod delete_article;
+pub(crate) mod favorite_article;
+pub(crate) mod list_articles;
+pub(crate) mod unfavorite_article;
+pub(crate) mod update_article;
+pub(crate) mod get_article;
+pub(crate) mod article_routes;
