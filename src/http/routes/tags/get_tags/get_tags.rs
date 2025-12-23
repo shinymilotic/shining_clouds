@@ -2,13 +2,8 @@ use crate::app_error::AppError;
 use crate::http::AppState;
 use crate::http::dto::tag::TagsResponse;
 use axum::extract::State;
-use axum::routing::get;
-use axum::{Json, Router};
+use axum::{Json};
 use tracing::info;
-
-pub(crate) fn tag_routes() -> Router<AppState> {
-    Router::new().route("/tags", get(get_tags))
-}
 
 pub(crate) async fn get_tags(
     State(state): State<AppState>,

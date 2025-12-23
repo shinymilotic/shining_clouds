@@ -3,8 +3,11 @@ pub(crate) mod extractors;
 pub(crate) mod routes;
 
 use axum::extract::Request;
-use routes::*;
-
+use routes::users::user_routes;
+use routes::comments::comment_routes;
+use routes::profiles::profile_routes;
+use routes::articles::article_routes;
+use routes::tags::tag_routes;
 use crate::{app_config::AppConfig};
 use crate::domain::article_service::ArticleService;
 use crate::domain::comment_service::CommentService;
@@ -42,11 +45,11 @@ impl<B> MakeSpan<B> for FilteringMakeSpan<'_> {
 
 pub fn router(state: AppState) -> Router {
     let api_routes = Router::new()
-        .merge(users::user_routes::user_routes())
-        .merge(profiles::profile_routes())
-        .merge(articles::article_routes::article_routes())
-        .merge(comments::comment_routes())
-        .merge(tags::tag_routes())
+        .merge(user_routes::user_routes())
+        .merge(profile_routes::profile_routes())
+        .merge(article_routes::article_routes())
+        .merge(comment_routes::comment_routes())
+        .merge(tag_routes::tag_routes())
         .layer(
             TraceLayer::new_for_http()
                 .make_span_with(FilteringMakeSpan::except_routes(vec!["/api/health"]))
