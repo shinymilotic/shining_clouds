@@ -42,8 +42,7 @@ impl<B> MakeSpan<B> for FilteringMakeSpan<'_> {
 
 pub fn router(state: AppState) -> Router {
     let api_routes = Router::new()
-        .merge(auth::auth_routes())
-        .merge(users::user_routes())
+        .merge(users::user_routes::user_routes())
         .merge(profiles::profile_routes())
         .merge(articles::article_routes::article_routes())
         .merge(comments::comment_routes())
@@ -52,8 +51,7 @@ pub fn router(state: AppState) -> Router {
             TraceLayer::new_for_http()
                 .make_span_with(FilteringMakeSpan::except_routes(vec!["/api/health"]))
                 .on_response(DefaultOnResponse::new().level(tracing::Level::INFO)),
-        )
-        .merge(health::health_routes());
+        );
 
     Router::new()
         .nest("/api", api_routes)
