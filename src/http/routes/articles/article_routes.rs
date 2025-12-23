@@ -1,19 +1,19 @@
 use crate::http::AppState;
-use crate::http::routes::articles::list_articles;
-use crate::http::routes::articles::articles_feed;
-use crate::http::routes::articles::get_article;
-use crate::http::routes::articles::update_article;
-use crate::http::routes::articles::delete_article;
-use crate::http::routes::articles::favorite_article;
-use crate::http::routes::articles::unfavorite_article;
-use crate::http::routes::articles::create_article;
+use crate::http::routes::articles::articles_list::articles_list;
+use crate::http::routes::articles::articles_feed::articles_feed;
+use crate::http::routes::articles::get_article::get_article;
+use crate::http::routes::articles::update_article::update_article;
+use crate::http::routes::articles::delete_article::delete_article;
+use crate::http::routes::articles::favorite_article::favorite_article;
+use crate::http::routes::articles::unfavorite_article::unfavorite_article;
+use crate::http::routes::articles::create_article::create_article;
 
 use axum::{ Router};
 use axum::routing::{delete, get, post, put};
 
 pub(crate) fn article_routes() -> Router<AppState> {
     Router::new()
-        .route("/articles", get(list_articles::list_articles))
+        .route("/articles", get(articles_list::list_articles))
         .route("/articles", post(create_article::create_article))
         .route("/articles/feed", get(articles_feed::feed_articles))
         .route("/articles/{slug}", get(get_article::get_article))
