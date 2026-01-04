@@ -3,6 +3,7 @@ use crate::domain::commands::register_command::RegisterCommand;
 use crate::http::AppState;
 use crate::http::dto::register::RegisterRequest;
 use crate::http::dto::user::{UserData, UserResponse};
+use crate::utils::jwt::generate_token;
 use axum::extract::State;
 use axum::http::StatusCode;
 use axum::{Json};
@@ -21,7 +22,7 @@ pub(crate) async fn register(
 
     let user = app_state.user_service.register_user(command).await?;
 
-    let token = app_state.jwt.generate_token(user.id)?;
+    let token = generate_token(app_state.jwt, user.id)?;
 
     let user = UserData {
         email: user.email,

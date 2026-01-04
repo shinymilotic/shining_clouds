@@ -3,6 +3,7 @@ use crate::domain::commands::login_command::LoginCommand;
 use crate::http::AppState;
 use crate::http::dto::login::LoginRequest;
 use crate::http::dto::user::{UserData, UserResponse};
+use crate::utils::jwt::generate_token;
 use axum::extract::State;
 use axum::{Json};
 use tracing::info;
@@ -17,7 +18,7 @@ pub(crate) async fn login(
 
     let user = app_state.user_service.login_user(command).await?;
 
-    let token = app_state.jwt.generate_token(user.id)?;
+    let token = generate_token(app_state.jwt, user.id)?;
 
     let user = UserData::new(user, token);
 

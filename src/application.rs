@@ -8,7 +8,6 @@ use crate::persistence::user_repository::UserRepository;
 use crate::server::init_server;
 use crate::tracing::init_tracing;
 use crate::utils::hasher::Hasher;
-use crate::utils::jwt::JwtHandler;
 use crate::{domain, http};
 use domain::article_service::ArticleService;
 use domain::comment_service::CommentService;
@@ -35,7 +34,7 @@ pub async fn create_app_state(config: &crate::app_config::AppConfig) -> AppState
         .await
         .expect("Failed to connect to database");
 
-    let jwt = JwtHandler::new(config.secrets.jwt.0.clone());
+    let jwt = config.secrets.jwt.0.clone();
     let hasher = Hasher::new(config.secrets.pepper.0.clone());
 
     let user_repo = UserRepository::new(db.clone());

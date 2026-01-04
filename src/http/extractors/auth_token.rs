@@ -1,4 +1,4 @@
-use crate::http::AppState;
+use crate::{http::AppState, utils::jwt::verify_token};
 use crate::model::values::user_id::UserId;
 use axum::{
     extract::FromRequestParts,
@@ -30,8 +30,7 @@ impl FromRequestParts<AppState> for Option<AuthToken> {
                 .strip_prefix("Token ")
                 .ok_or((StatusCode::UNAUTHORIZED, "Invalid Token format"))?;
 
-            let parsed_token = jwt
-                .verify_token(token)
+            let parsed_token = verify_token(jwt, token)
                 .map_err(|_| (StatusCode::UNAUTHORIZED, "Invalid or expired token"))?;
 
             let uuid: Uuid = parsed_token.sub.parse().map_err(|_| {

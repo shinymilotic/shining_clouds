@@ -14,7 +14,6 @@ use crate::domain::comment_service::CommentService;
 use crate::domain::profile_service::ProfileService;
 use crate::domain::tag_service::TagService;
 use crate::domain::user_service::UserService;
-use crate::utils::jwt::JwtHandler;
 use axum::Router;
 use tower_http::trace::{DefaultMakeSpan, DefaultOnResponse, MakeSpan, TraceLayer};
 use tracing::Span;
@@ -69,5 +68,5 @@ pub struct AppState {
     pub comment_service: CommentService,
     pub tag_service: TagService,
     pub profile_service: ProfileService,
-    pub jwt: JwtHandler,
+    pub jwt: String,
 }
